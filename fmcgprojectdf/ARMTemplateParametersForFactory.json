@@ -22,6 +22,9 @@
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "sql-admin"
+		},
+		"Github1_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/affanmohammed/FMCG_Project/main/Datasets/fmcg_part3.csv"
 		}
 	}
 }

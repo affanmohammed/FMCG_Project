@@ -31,6 +31,10 @@
 			"type": "string",
 			"defaultValue": "sql-admin"
 		},
+		"Github1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/affanmohammed/FMCG_Project/main/Datasets/fmcg_part3.csv"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -75,6 +79,9 @@
 					},
 					"AzureSqlDatabase1_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"Github1_properties_typeProperties_url": {
+						"value": "[parameters('Github1_properties_typeProperties_url')]"
 					}
 				}
 			},
