@@ -56,14 +56,14 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "JsonSource",
+								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
-									"type": "JsonReadSettings"
+									"type": "DelimitedTextReadSettings"
 								}
 							},
 							"sink": {
@@ -71,18 +71,26 @@
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
 						},
 						"inputs": [
 							{
-								"referenceName": "Json1",
+								"referenceName": "DelimitedText1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureSqlTable1",
+								"referenceName": "AzureSqlTable3",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -95,12 +103,12 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Json1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable3')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable3')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -166,18 +174,15 @@
 					},
 					{
 						"name": "flood_impacted",
-						"type": "int",
-						"precision": 10
+						"type": "bit"
 					},
 					{
 						"name": "flood_proof",
-						"type": "int",
-						"precision": 10
+						"type": "bit"
 					},
 					{
 						"name": "electric_supply",
-						"type": "int",
-						"precision": 10
+						"type": "bit"
 					},
 					{
 						"name": "dist_from_hub",
@@ -186,13 +191,13 @@
 					},
 					{
 						"name": "workers_num",
-						"type": "int",
-						"precision": 10
+						"type": "float",
+						"precision": 15
 					},
 					{
 						"name": "wh_est_year",
-						"type": "int",
-						"precision": 10
+						"type": "float",
+						"precision": 15
 					},
 					{
 						"name": "storage_issue_reported_l3m",
@@ -201,8 +206,7 @@
 					},
 					{
 						"name": "temp_reg_mach",
-						"type": "int",
-						"precision": 10
+						"type": "bit"
 					},
 					{
 						"name": "approved_wh_govt_certificate",
@@ -226,7 +230,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "fmcgtable"
+					"table": "fmcgwarehouse"
 				}
 			},
 			"dependsOn": [
@@ -234,7 +238,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -243,91 +247,116 @@
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Json",
+				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "fmcg_part2.json",
+						"fileName": "fmcg_part2.csv",
 						"fileSystem": "inputfile"
-					}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
 				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"Ware_house_ID": {
-							"type": "string"
-						},
-						"WH_Manager_ID": {
-							"type": "string"
-						},
-						"Location_type": {
-							"type": "string"
-						},
-						"WH_capacity_size": {
-							"type": "string"
-						},
-						"zone": {
-							"type": "string"
-						},
-						"WH_regional_zone": {
-							"type": "string"
-						},
-						"num_refill_req_l3m": {
-							"type": "integer"
-						},
-						"transport_issue_l1y": {
-							"type": "integer"
-						},
-						"Competitor_in_mkt": {
-							"type": "integer"
-						},
-						"retail_shop_num": {
-							"type": "integer"
-						},
-						"wh_owner_type": {
-							"type": "string"
-						},
-						"distributor_num": {
-							"type": "integer"
-						},
-						"flood_impacted": {
-							"type": "integer"
-						},
-						"flood_proof": {
-							"type": "integer"
-						},
-						"electric_supply": {
-							"type": "integer"
-						},
-						"dist_from_hub": {
-							"type": "integer"
-						},
-						"workers_num": {
-							"type": "integer"
-						},
-						"wh_est_year": {
-							"type": "null"
-						},
-						"storage_issue_reported_l3m": {
-							"type": "integer"
-						},
-						"temp_reg_mach": {
-							"type": "integer"
-						},
-						"approved_wh_govt_certificate": {
-							"type": "string"
-						},
-						"wh_breakdown_l3m": {
-							"type": "integer"
-						},
-						"govt_check_l3m": {
-							"type": "integer"
-						},
-						"product_wg_ton": {
-							"type": "integer"
-						}
+				"schema": [
+					{
+						"name": "Ware_house_ID",
+						"type": "String"
+					},
+					{
+						"name": "WH_Manager_ID",
+						"type": "String"
+					},
+					{
+						"name": "Location_type",
+						"type": "String"
+					},
+					{
+						"name": "WH_capacity_size",
+						"type": "String"
+					},
+					{
+						"name": "zone",
+						"type": "String"
+					},
+					{
+						"name": "WH_regional_zone",
+						"type": "String"
+					},
+					{
+						"name": "num_refill_req_l3m",
+						"type": "String"
+					},
+					{
+						"name": "transport_issue_l1y",
+						"type": "String"
+					},
+					{
+						"name": "Competitor_in_mkt",
+						"type": "String"
+					},
+					{
+						"name": "retail_shop_num",
+						"type": "String"
+					},
+					{
+						"name": "wh_owner_type",
+						"type": "String"
+					},
+					{
+						"name": "distributor_num",
+						"type": "String"
+					},
+					{
+						"name": "flood_impacted",
+						"type": "String"
+					},
+					{
+						"name": "flood_proof",
+						"type": "String"
+					},
+					{
+						"name": "electric_supply",
+						"type": "String"
+					},
+					{
+						"name": "dist_from_hub",
+						"type": "String"
+					},
+					{
+						"name": "workers_num",
+						"type": "String"
+					},
+					{
+						"name": "wh_est_year",
+						"type": "String"
+					},
+					{
+						"name": "storage_issue_reported_l3m",
+						"type": "String"
+					},
+					{
+						"name": "temp_reg_mach",
+						"type": "String"
+					},
+					{
+						"name": "approved_wh_govt_certificate",
+						"type": "String"
+					},
+					{
+						"name": "wh_breakdown_l3m",
+						"type": "String"
+					},
+					{
+						"name": "govt_check_l3m",
+						"type": "String"
+					},
+					{
+						"name": "product_wg_ton",
+						"type": "String"
 					}
-				}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
