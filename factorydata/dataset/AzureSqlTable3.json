@@ -1,6 +1,10 @@
 {
-	"name": "AzureSqlTable2",
+	"name": "AzureSqlTable3",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
@@ -59,18 +63,15 @@
 			},
 			{
 				"name": "flood_impacted",
-				"type": "int",
-				"precision": 10
+				"type": "bit"
 			},
 			{
 				"name": "flood_proof",
-				"type": "int",
-				"precision": 10
+				"type": "bit"
 			},
 			{
 				"name": "electric_supply",
-				"type": "int",
-				"precision": 10
+				"type": "bit"
 			},
 			{
 				"name": "dist_from_hub",
@@ -79,12 +80,13 @@
 			},
 			{
 				"name": "workers_num",
-				"type": "int",
-				"precision": 10
+				"type": "float",
+				"precision": 15
 			},
 			{
 				"name": "wh_est_year",
-				"type": "varchar"
+				"type": "float",
+				"precision": 15
 			},
 			{
 				"name": "storage_issue_reported_l3m",
@@ -93,12 +95,11 @@
 			},
 			{
 				"name": "temp_reg_mach",
-				"type": "int",
-				"precision": 10
+				"type": "bit"
 			},
 			{
 				"name": "approved_wh_govt_certificate",
-				"type": "char"
+				"type": "varchar"
 			},
 			{
 				"name": "wh_breakdown_l3m",
@@ -118,7 +119,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "fmcgtable"
+			"table": "fmcgwarehouse"
 		}
 	}
 }

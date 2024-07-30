@@ -1,124 +1,120 @@
 {
-	"name": "AzureSqlTable2",
+	"name": "DelimitedText1",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
-		"type": "AzureSqlTable",
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "fmcg_part2.csv",
+				"fileSystem": "inputfile"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
 		"schema": [
 			{
 				"name": "Ware_house_ID",
-				"type": "varchar"
+				"type": "String"
 			},
 			{
 				"name": "WH_Manager_ID",
-				"type": "varchar"
+				"type": "String"
 			},
 			{
 				"name": "Location_type",
-				"type": "varchar"
+				"type": "String"
 			},
 			{
 				"name": "WH_capacity_size",
-				"type": "varchar"
+				"type": "String"
 			},
 			{
 				"name": "zone",
-				"type": "varchar"
+				"type": "String"
 			},
 			{
 				"name": "WH_regional_zone",
-				"type": "varchar"
+				"type": "String"
 			},
 			{
 				"name": "num_refill_req_l3m",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "transport_issue_l1y",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "Competitor_in_mkt",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "retail_shop_num",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "wh_owner_type",
-				"type": "varchar"
+				"type": "String"
 			},
 			{
 				"name": "distributor_num",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "flood_impacted",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "flood_proof",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "electric_supply",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "dist_from_hub",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "workers_num",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "wh_est_year",
-				"type": "varchar"
+				"type": "String"
 			},
 			{
 				"name": "storage_issue_reported_l3m",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "temp_reg_mach",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "approved_wh_govt_certificate",
-				"type": "char"
+				"type": "String"
 			},
 			{
 				"name": "wh_breakdown_l3m",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "govt_check_l3m",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			},
 			{
 				"name": "product_wg_ton",
-				"type": "int",
-				"precision": 10
+				"type": "String"
 			}
-		],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "fmcgtable"
-		}
+		]
 	}
 }
