@@ -1,0 +1,376 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "fmcgprojectdf"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://fmcgprojectstorage23.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "az23df.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "az_db23"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sql-admin"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Ware_house_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "WH_Manager_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "Location_type",
+						"type": "varchar"
+					},
+					{
+						"name": "WH_capacity_size",
+						"type": "varchar"
+					},
+					{
+						"name": "zone",
+						"type": "varchar"
+					},
+					{
+						"name": "WH_regional_zone",
+						"type": "varchar"
+					},
+					{
+						"name": "num_refill_req_l3m",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "transport_issue_l1y",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Competitor_in_mkt",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "retail_shop_num",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "wh_owner_type",
+						"type": "varchar"
+					},
+					{
+						"name": "distributor_num",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "flood_impacted",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "flood_proof",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "electric_supply",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "dist_from_hub",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "workers_num",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "wh_est_year",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "storage_issue_reported_l3m",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "temp_reg_mach",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "approved_wh_govt_certificate",
+						"type": "varchar"
+					},
+					{
+						"name": "wh_breakdown_l3m",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "govt_check_l3m",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "product_wg_ton",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "fmcgtable"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "fmcg_part2.json",
+						"fileSystem": "inputfile"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"Ware_house_ID": {
+							"type": "string"
+						},
+						"WH_Manager_ID": {
+							"type": "string"
+						},
+						"Location_type": {
+							"type": "string"
+						},
+						"WH_capacity_size": {
+							"type": "string"
+						},
+						"zone": {
+							"type": "string"
+						},
+						"WH_regional_zone": {
+							"type": "string"
+						},
+						"num_refill_req_l3m": {
+							"type": "integer"
+						},
+						"transport_issue_l1y": {
+							"type": "integer"
+						},
+						"Competitor_in_mkt": {
+							"type": "integer"
+						},
+						"retail_shop_num": {
+							"type": "integer"
+						},
+						"wh_owner_type": {
+							"type": "string"
+						},
+						"distributor_num": {
+							"type": "integer"
+						},
+						"flood_impacted": {
+							"type": "integer"
+						},
+						"flood_proof": {
+							"type": "integer"
+						},
+						"electric_supply": {
+							"type": "integer"
+						},
+						"dist_from_hub": {
+							"type": "integer"
+						},
+						"workers_num": {
+							"type": "integer"
+						},
+						"wh_est_year": {
+							"type": "null"
+						},
+						"storage_issue_reported_l3m": {
+							"type": "integer"
+						},
+						"temp_reg_mach": {
+							"type": "integer"
+						},
+						"approved_wh_govt_certificate": {
+							"type": "string"
+						},
+						"wh_breakdown_l3m": {
+							"type": "integer"
+						},
+						"govt_check_l3m": {
+							"type": "integer"
+						},
+						"product_wg_ton": {
+							"type": "integer"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Json1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Json1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+			]
+		}
+	]
+}
