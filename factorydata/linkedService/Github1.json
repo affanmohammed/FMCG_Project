@@ -1,0 +1,12 @@
+{
+	"name": "Github1",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://raw.githubusercontent.com/affanmohammed/FMCG_Project/main/Datasets/fmcg_part3.csv",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
