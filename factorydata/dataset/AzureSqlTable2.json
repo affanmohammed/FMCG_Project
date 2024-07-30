@@ -1,6 +1,10 @@
 {
-	"name": "AzureSqlTable1",
+	"name": "AzureSqlTable2",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
@@ -84,8 +88,7 @@
 			},
 			{
 				"name": "wh_est_year",
-				"type": "int",
-				"precision": 10
+				"type": "varchar"
 			},
 			{
 				"name": "storage_issue_reported_l3m",
@@ -99,7 +102,7 @@
 			},
 			{
 				"name": "approved_wh_govt_certificate",
-				"type": "varchar"
+				"type": "char"
 			},
 			{
 				"name": "wh_breakdown_l3m",
