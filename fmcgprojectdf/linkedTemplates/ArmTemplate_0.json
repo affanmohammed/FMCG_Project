@@ -167,8 +167,8 @@
 					},
 					{
 						"name": "wh_est_year",
-						"type": "float",
-						"precision": 15
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "storage_issue_reported_l3m",
