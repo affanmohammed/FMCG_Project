@@ -1,0 +1,95 @@
+{
+	"name": "Json_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "fmcg_part1.json",
+				"fileSystem": "inputfile"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"Ware_house_ID": {
+					"type": "string"
+				},
+				"WH_Manager_ID": {
+					"type": "string"
+				},
+				"Location_type": {
+					"type": "string"
+				},
+				"WH_capacity_size": {
+					"type": "string"
+				},
+				"zone": {
+					"type": "string"
+				},
+				"WH_regional_zone": {
+					"type": "string"
+				},
+				"num_refill_req_l3m": {
+					"type": "integer"
+				},
+				"transport_issue_l1y": {
+					"type": "integer"
+				},
+				"Competitor_in_mkt": {
+					"type": "integer"
+				},
+				"retail_shop_num": {
+					"type": "integer"
+				},
+				"wh_owner_type": {
+					"type": "string"
+				},
+				"distributor_num": {
+					"type": "integer"
+				},
+				"flood_impacted": {
+					"type": "integer"
+				},
+				"flood_proof": {
+					"type": "integer"
+				},
+				"electric_supply": {
+					"type": "integer"
+				},
+				"dist_from_hub": {
+					"type": "integer"
+				},
+				"workers_num": {
+					"type": "integer"
+				},
+				"wh_est_year": {
+					"type": "null"
+				},
+				"storage_issue_reported_l3m": {
+					"type": "integer"
+				},
+				"temp_reg_mach": {
+					"type": "integer"
+				},
+				"approved_wh_govt_certificate": {
+					"type": "string"
+				},
+				"wh_breakdown_l3m": {
+					"type": "integer"
+				},
+				"govt_check_l3m": {
+					"type": "integer"
+				},
+				"product_wg_ton": {
+					"type": "integer"
+				}
+			}
+		}
+	}
+}
