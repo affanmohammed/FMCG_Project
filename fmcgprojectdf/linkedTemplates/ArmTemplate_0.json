@@ -76,7 +76,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable3')]",
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -142,15 +142,18 @@
 					},
 					{
 						"name": "flood_impacted",
-						"type": "bit"
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "flood_proof",
-						"type": "bit"
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "electric_supply",
-						"type": "bit"
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "dist_from_hub",
@@ -174,7 +177,8 @@
 					},
 					{
 						"name": "temp_reg_mach",
-						"type": "bit"
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "approved_wh_govt_certificate",
@@ -384,7 +388,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureSqlTable3",
+								"referenceName": "AzureSqlTable1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -398,7 +402,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable3')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		}
 	]
