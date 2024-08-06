@@ -39,7 +39,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CosmosDbNoSqlContainer1",
+						"referenceName": "CosmosDbNoSqlContainer2",
 						"type": "DatasetReference"
 					}
 				]
@@ -82,7 +82,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CosmosDbNoSqlContainer1",
+						"referenceName": "CosmosDbNoSqlContainer2",
 						"type": "DatasetReference"
 					}
 				]
@@ -119,7 +119,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CosmosDbNoSqlContainer1",
+						"referenceName": "CosmosDbNoSqlContainer2",
 						"type": "DatasetReference"
 					}
 				]
