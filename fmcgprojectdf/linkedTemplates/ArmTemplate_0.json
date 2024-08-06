@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'CosmosDbNoSql1'"
 		},
+		"CosmosDbNoSql2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CosmosDbNoSql2'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://fmcgprojectstorage23.dfs.core.windows.net/"
@@ -123,6 +127,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDbNoSql2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDb",
+				"typeProperties": {
+					"connectionString": "[parameters('CosmosDbNoSql2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Github1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -143,18 +160,38 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "CosmosDbNoSql1",
+					"referenceName": "CosmosDbNoSql2",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
 				"type": "CosmosDbSqlApiCollection",
 				"schema": {},
 				"typeProperties": {
-					"collectionName": "fmcgcontainercosmos"
+					"collectionName": "container1"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CosmosDbNoSql1')]"
+				"[concat(variables('factoryId'), '/linkedServices/CosmosDbNoSql2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDbNoSqlContainer2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CosmosDbNoSql2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {},
+				"typeProperties": {
+					"collectionName": "container1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/CosmosDbNoSql2')]"
 			]
 		},
 		{
@@ -747,7 +784,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "CosmosDbNoSqlContainer1",
+								"referenceName": "CosmosDbNoSqlContainer2",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -792,7 +829,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "CosmosDbNoSqlContainer1",
+								"referenceName": "CosmosDbNoSqlContainer2",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -831,7 +868,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "CosmosDbNoSqlContainer1",
+								"referenceName": "CosmosDbNoSqlContainer2",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -911,7 +948,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Github_data')]",
-				"[concat(variables('factoryId'), '/datasets/CosmosDbNoSqlContainer1')]",
+				"[concat(variables('factoryId'), '/datasets/CosmosDbNoSqlContainer2')]",
 				"[concat(variables('factoryId'), '/datasets/Json_data')]",
 				"[concat(variables('factoryId'), '/datasets/Table_data')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks1')]"
